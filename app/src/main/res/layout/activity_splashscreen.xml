@@ -13,7 +13,9 @@
         android:layout_gravity="center_horizontal|top"
         android:layout_marginStart="40dp"
         android:layout_marginTop="1dp"
+        android:layout_marginEnd="40dp"
         android:src="@mipmap/logo"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -28,14 +30,13 @@
 <!--        app:layout_constraintBottom_toBottomOf="@+id/textView6"-->
 <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <rudenia.fit.bstu.projectstpms.ProgressBar.CircularProgressBar
+    <rudenia.fit.bstu.projectstpms.ProgressBar.RateTextCircularProgressBar
         android:id="@+id/rate_progress_bar"
-        android:layout_width="320dp"
-        android:layout_height="272dp"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        android:layout_width="324dp"
+        android:layout_height="281dp"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -55,14 +56,14 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="239dp"
-        android:layout_height="52dp"
+        android:layout_width="236dp"
+        android:layout_height="38dp"
         android:layout_marginStart="88dp"
         android:layout_marginEnd="84dp"
         android:fontFamily="sans-serif-black"
+        android:text="ГОЛОСОВЫЕ ЗАМЕТКИ"
         android:textColor="#050505"
         android:textSize="20sp"
-        android:text="ГОЛОСОВЫЕ ЗАМЕТКИ"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

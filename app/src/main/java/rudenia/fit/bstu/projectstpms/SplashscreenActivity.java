@@ -19,7 +19,7 @@ public class SplashscreenActivity extends Activity {
 
   //  private CircularProgressBar mCircularProgressBar;
    // private RateTextCircularProgressBar mRateTextCircularProgressBar;
-    public RateTextCircularProgressBar mRate;
+    public RateTextCircularProgressBar mRateTextCircularProgressBar;
     private int progress = 0;
 
 
@@ -29,7 +29,7 @@ public class SplashscreenActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
 
-            mRate.setProgress(msg.what);
+            mRateTextCircularProgressBar.setProgress(msg.what);
             if( progress >= 100 ) {
                 progress = 100;
             }
@@ -42,13 +42,13 @@ public class SplashscreenActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_splashscreen);
 
 
 
-        mRate = (RateTextCircularProgressBar)findViewById(R.id.rate_progress_bar);
-        mRate.setMax(100);
-        mRate.getCircularProgressBar().setCircleWidth(20);
+        mRateTextCircularProgressBar = (RateTextCircularProgressBar)findViewById(R.id.rate_progress_bar);
+        mRateTextCircularProgressBar.setMax(100);
+        mRateTextCircularProgressBar.getCircularProgressBar().setCircleWidth(20);
 
         mHandler.sendEmptyMessageDelayed(progress++, 100);
         new android.os.Handler().postDelayed(new Runnable() {

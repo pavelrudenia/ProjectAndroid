@@ -85,9 +85,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //Как результат получаем строковый массив слов, похожих на произнесенное:
             ArrayList<String>result=data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             //и отображаем их в элементе TextView:
-            String VoiceTXT1 =result.toString();
-            String VoiceTXT2 =VoiceTXT1.substring(1, VoiceTXT1.length() - 1);
-            EnteredText.setText(VoiceTXT2);
+//            String VoiceTXT1 =result.toString();
+//            String VoiceTXT2 =VoiceTXT1.substring(1, VoiceTXT1.length() - 1);
+            EnteredText.setText(result.toString());
 
         }
         super.onActivityResult(requestCode, resultCode, data);
