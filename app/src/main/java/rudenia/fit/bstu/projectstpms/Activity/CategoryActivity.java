@@ -1,4 +1,4 @@
-package rudenia.fit.bstu.projectstpms;
+package rudenia.fit.bstu.projectstpms.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
+
+import rudenia.fit.bstu.projectstpms.R;
 import rudenia.fit.bstu.projectstpms.adapter.CategoryDataAdapter;
 import rudenia.fit.bstu.projectstpms.database.DbHelper;
 import rudenia.fit.bstu.projectstpms.dialog_fragment.CreateCategoryDialog;

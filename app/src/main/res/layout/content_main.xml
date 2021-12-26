@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bg_screen">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -26,11 +27,31 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/Welcome"
+            android:textColor="#131313"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/Voice"
+            android:textColor="#131313"
+            android:textSize="20sp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginTop="@dimen/RelLayout_MarginTopAndBottom"
+            android:layout_marginBottom="@dimen/RelLayout_MarginTopAndBottom">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -45,45 +66,62 @@
 
         <Button
             android:id="@+id/btnVoice"
-            android:layout_width="120dp"
+            android:layout_width="184dp"
             android:layout_height="wrap_content"
-            android:text="Записать"
             android:layout_gravity="center"
-            />
+
+            android:background="@drawable/roundedbutton"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Записать"
+            android:textColor="#131212"
+            android:textColorHint="#040303"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv"
             android:layout_width="match_parent"
-            android:layout_height="99dp"
-            android:text="[Здесь появится текст 111после записи]"
+            android:layout_height="114dp"
+            android:text="@string/text"
 
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Выберите раздел заметки"
-            android:textSize="16sp" />
+            android:text="@string/Сhange"
+            android:textColor="#151414"
+            android:textColorHint="#0B0B0B"
+            android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="51dp"
+            android:layout_height="48dp"
             android:paddingTop="10dp" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="184dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:onClick="addNote"
-        android:text="Сохранить"
-        app:layout_anchor="@+id/linearLayout"
-        app:layout_anchorGravity="center" />
+            android:onClick="addNote"
+            android:text="@string/save"
+            android:textColor="#131212"
+            android:textColorHint="#040303"
+            android:textSize="16sp"
+            android:background="@drawable/roundedbutton"
+            android:fontFamily="sans-serif-condensed"/>
+
+        <ImageView
+            android:id="@+id/ConvertAnim"
+            android:layout_width="205dp"
+            android:layout_height="199dp"
+            app:srcCompat="@drawable/convert" />
+
+    </LinearLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

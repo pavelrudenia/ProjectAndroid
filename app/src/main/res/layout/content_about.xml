@@ -2,20 +2,24 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_main"
@@ -31,29 +35,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:text="Голосовые Заметки"
-            android:textAlignment="center"
             android:fontFamily="sans-serif-black"
+            android:text="@string/Voice"
+            android:textAlignment="center"
             android:textColor="#070707"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="604dp"
+            android:layout_width="330dp"
+            android:layout_height="375dp"
+            android:layout_marginStart="@dimen/content_about_image_MarginStart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:srcCompat="@mipmap/logo" />
 
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:fontFamily="sans-serif-black"
-            android:text="@string/copyright"
+            android:id="@+id/textView4"
+            android:layout_width="363dp"
+            android:layout_height="220dp"
+            android:layout_marginStart="@dimen/content_about_TextView_marginStart"
+            android:layout_marginTop="@dimen/content_about_TextView_marginTop"
+            android:text="@string/task"
             android:textColor="#070707"
             android:textSize="20sp"
-            android:paddingLeft="7dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:fontFamily="sans-serif-black"
+        android:paddingLeft="@dimen/content_about_TextView_padding"
+        android:text="@string/copyright"
+        android:textColor="#070707"
+        android:textSize="20sp"
+        app:layout_anchor="@+id/linearLayout"
+        app:layout_anchorGravity="bottom|center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

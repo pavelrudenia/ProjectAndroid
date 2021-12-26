@@ -1,21 +1,24 @@
-package rudenia.fit.bstu.projectstpms;
+package rudenia.fit.bstu.projectstpms.Activity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +32,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import rudenia.fit.bstu.projectstpms.R;
 import rudenia.fit.bstu.projectstpms.database.DbHelper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Spinner mCategory;
     private TextView EnteredText;
     private String selectedCategory;
+    private ImageView ConvertAnim;
     //Это значение мы используем для проверки успеха
     //получения обратной информации в onActivityResult ():
     private static final int Print_Words = 100;
@@ -62,7 +67,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         db = dbHelper.getWritableDatabase();
         EnteredText = findViewById(R.id.tv);
         mCategory = findViewById(R.id.spinner);
+        ConvertAnim = findViewById(R.id.ConvertAnim);
 
+
+        ConvertAnim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAnimation2();
+            }
+        });
         Button mButton =  findViewById(R.id.btnVoice);
         mButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -170,7 +183,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 database.insert("Note", null, cv);
                 // super.onBackPressed();
-
+                startAnimation();
+                //Toast.makeText(MainActivity.this,"Заметка добавлена успешно!", Toast.LENGTH_SHORT).show();
+                Toast t = Toast.makeText(getApplicationContext(),"Заметка добавлена успешно!",Toast.LENGTH_LONG);
+                t.setGravity(Gravity.BOTTOM,0,0);
+                t.show();
+//                toast.setGravity(Gravity.TOP, 0,0);
+//                toast.show();
             } else {
                 Toast.makeText(MainActivity.this, "ошибочка", Toast.LENGTH_SHORT).show();
             }
@@ -179,6 +198,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(this, "Вы не создали категорию", Toast.LENGTH_SHORT).show();
             EnteredText.setText("Здесь появится текст после записи");
         }
-
+    }
+    private void startAnimation(){
+        Animation animation = AnimationUtils.loadAnimation(this,R.anim.anim);
+        ConvertAnim.startAnimation(animation);
+    }
+    private void startAnimation2(){
+        Animation animation = AnimationUtils.loadAnimation(this,R.anim.anim2);
+        ConvertAnim.startAnimation(animation);
     }
 }

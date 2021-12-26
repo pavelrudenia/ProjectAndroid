@@ -1,4 +1,4 @@
-package rudenia.fit.bstu.projectstpms;
+package rudenia.fit.bstu.projectstpms.Activity;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import rudenia.fit.bstu.projectstpms.R;
 import rudenia.fit.bstu.projectstpms.adapter.NotesDataAdapter;
 import rudenia.fit.bstu.projectstpms.grafics.my_view.PieChartView;
 

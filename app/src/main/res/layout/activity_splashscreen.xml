@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    >
 
     <ImageView
         android:layout_width="329dp"
@@ -61,7 +62,7 @@
         android:layout_marginStart="88dp"
         android:layout_marginEnd="84dp"
         android:fontFamily="sans-serif-black"
-        android:text="ГОЛОСОВЫЕ ЗАМЕТКИ"
+        android:text="@string/Voice2"
         android:textColor="#050505"
         android:textSize="20sp"
 

@@ -1,20 +1,24 @@
-package rudenia.fit.bstu.projectstpms;
+package rudenia.fit.bstu.projectstpms.Activity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
-
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,18 +26,16 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Spinner;
-
 import com.google.android.material.navigation.NavigationView;
-
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import rudenia.fit.bstu.projectstpms.R;
 import rudenia.fit.bstu.projectstpms.database.DbHelper;
-
 
 public class AllNote extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
 
     private GridView mNoteList;
     public Integer counter = 0;
@@ -42,7 +44,11 @@ public class AllNote extends AppCompatActivity
     private SQLiteDatabase db;
     private EditText mDateWith, mDateOn;
     private String dateWith, dateOn;
-
+    private NotificationManager notificationManager;
+    // Идентификатор уведомления
+    private static final int NOTIFY_ID = 1;
+    // Идентификатор канала
+    private static final String CHANNEL_ID = "CHANNEL_ID";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,15 +87,35 @@ public class AllNote extends AppCompatActivity
                 }
 
                 else {
-                    mNoteList.getChildAt(prevPosition).setBackgroundColor(Color.TRANSPARENT);
-                    v.setBackgroundColor(Color.WHITE);
-                    counter--;
+                    String getNote;
+                    String getAllNote;
+                    getAllNote=parent.getItemAtPosition(position).toString();
+                    int p1 = getAllNote.indexOf("[") +1;
+                    int p2 = getAllNote.indexOf("]",p1);
+                    getNote = getAllNote.substring(p1,p2);
+                    new AlertDialog.Builder(AllNote.this)
+                            .setMessage("Вы действительно хотите удалить заметку")
+                            .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mNoteList.getChildAt(prevPosition).setBackgroundColor(Color.TRANSPARENT);
+                                    v.setBackgroundColor(Color.TRANSPARENT);
+                                    counter--;
+
+                                }
+                            })
+                            .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                  db.delete("Note", "Note = '"+"[" + getNote +"]"+ "'", null);
+                                    Notification();
+                                    onStart();
+                                }
+                            }).create().show();
                 }
-
-
             }
         });
-
+        notificationManager =(NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
 
@@ -106,7 +132,29 @@ public class AllNote extends AppCompatActivity
         mNoteList.setAdapter(adapter);
         super.onStart();
     }
+    public void Notification(){
+        Intent intent = new Intent(getApplicationContext(),AllNote.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(getApplicationContext(),CHANNEL_ID)
+                        .setAutoCancel(true)
+                        .setSmallIcon(R.drawable.note)
+                        .setWhen(System.currentTimeMillis())
+                        .setContentIntent(pendingIntent)
+                        .setContentTitle("Вы удалили заметку!")
+                        .setContentText("Но вы в любой момент можете создать новую");
+        //.setPriority(PRIORITY_HIGH);
+        createChannelIfNeeded(notificationManager);
+        notificationManager.notify(NOTIFY_ID,notificationBuilder.build());
 
+    }
+    public static void createChannelIfNeeded(NotificationManager manager){
+        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.O){
+            NotificationChannel notificationChannel=new NotificationChannel(CHANNEL_ID,CHANNEL_ID,NotificationManager.IMPORTANCE_DEFAULT);
+            manager.createNotificationChannel(notificationChannel);
+        }
+    }
     protected void initSpiner() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getFacultys());
         mNote.setAdapter(adapter);
@@ -170,11 +218,10 @@ public class AllNote extends AppCompatActivity
                     data.add("---------------------------" + cursor.getString(indexDate) + " " +
                             cursor.getString(indexTime) + "--------------------------\nКатегория:" +
                             cursor.getString(indexCategory) + "\nЗаметка:" +
-                            cursor.getString(indexNote) + "\n----------------------------------------------------------------------------------");
+                            cursor.getString(indexNote) + "\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                 } while (cursor.moveToNext());
             }
             cursor.close();
-
             return data;
         }
 
@@ -193,7 +240,7 @@ public class AllNote extends AppCompatActivity
                 data.add("---------------------------" + cursor.getString(indexDate) +" "+
                         cursor.getString(indexTime) + "--------------------------\nКатегория:" +
                         cursor.getString(indexCategory) + "\nЗаметка:" +
-                        cursor.getString(indexNote) +"\n----------------------------------------------------------------------------------" );
+                        cursor.getString(indexNote) +"\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬" );
             } while (cursor.moveToNext());
         }
         cursor.close();

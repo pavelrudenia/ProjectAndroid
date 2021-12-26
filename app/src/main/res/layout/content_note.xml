@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bg_screen">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +30,8 @@
             android:id="@+id/spinnerNote"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            />
 
         <EditText
             android:id="@+id/date_with"
@@ -52,7 +54,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="Sort"
-            android:text="Сортировать" />
+            android:text="Сортировать"
+            android:textColor="#131212"
+            android:textColorHint="#040303"
+            android:textSize="16sp"
+            android:background="@drawable/roundedbutton"
+            android:fontFamily="sans-serif-condensed"/>
 
         <GridView
             android:id="@+id/notes_list"

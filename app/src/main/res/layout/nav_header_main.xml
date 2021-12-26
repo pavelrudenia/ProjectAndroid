@@ -4,6 +4,7 @@
     android:layout_height="270dp"
 
     android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+    android:layout_marginLeft="@dimen/nav_header_left_spacing"
     android:background="@mipmap/logo"
     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
     xmlns:android="http://schemas.android.com/apk/res/android" >

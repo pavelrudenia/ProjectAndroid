@@ -1,18 +1,14 @@
-package rudenia.fit.bstu.projectstpms;
+package rudenia.fit.bstu.projectstpms.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import androidx.appcompat.app.AppCompatActivity;
-import rudenia.fit.bstu.projectstpms.ProgressBar.CircularProgressBar;
 import rudenia.fit.bstu.projectstpms.ProgressBar.RateTextCircularProgressBar;
+import rudenia.fit.bstu.projectstpms.R;
 
 
 public class SplashscreenActivity extends Activity {

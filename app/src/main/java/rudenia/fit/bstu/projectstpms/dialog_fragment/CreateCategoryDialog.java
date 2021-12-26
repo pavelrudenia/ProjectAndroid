@@ -12,10 +12,9 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import rudenia.fit.bstu.projectstpms.CategoryActivity;
+import rudenia.fit.bstu.projectstpms.Activity.CategoryActivity;
 
 import rudenia.fit.bstu.projectstpms.database.DbHelper;
 import rudenia.fit.bstu.projectstpms.R;

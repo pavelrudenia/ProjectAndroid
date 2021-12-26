@@ -24,7 +24,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         database.execSQL("create table if not exists Note ( "
                 + "ID_NOTE integer primary key autoincrement, "
-                + "Note text not null, "
+                + "Note text unique not null, "
                 + "DATE text not null, "
                 + "Time text not null, "
                 + "CATEGORY text not null, "
