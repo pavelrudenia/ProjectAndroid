@@ -42,7 +42,6 @@ public class NotesDataAdapter extends RecyclerView.Adapter<NotesDataAdapter.View
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Notes cost = costs.get(position);

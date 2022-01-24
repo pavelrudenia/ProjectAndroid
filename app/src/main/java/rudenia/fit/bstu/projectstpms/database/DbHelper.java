@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "Rudenia.db";
+    private static final String DATABASE_NAME = "Rudenia1.db";
     private static final int DATABASE_VERSION = 1;
 
     public DbHelper(Context context) {
@@ -20,7 +20,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL("create table if not exists Category ( "
-                + "NAME text primary key);");
+                + "NAME text unique primary key);");
 
         database.execSQL("create table if not exists Note ( "
                 + "ID_NOTE integer primary key autoincrement, "

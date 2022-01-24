@@ -42,8 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView EnteredText;
     private String selectedCategory;
     private ImageView ConvertAnim;
-    //Это значение мы используем для проверки успеха
-    //получения обратной информации в onActivityResult ():
+
     private static final int Print_Words = 100;
 
     protected void onCreate(Bundle savedInstanceState) {

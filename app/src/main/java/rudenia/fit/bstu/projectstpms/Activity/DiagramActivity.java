@@ -68,11 +68,11 @@ public class DiagramActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         mPieChartView = findViewById(R.id.pie_chart);
-        float[] datapoints = getSumCosts();
+        float[] datapoints = getNote();
         drawRoundView(datapoints,80);
 
         mMainList = findViewById(R.id.main_list);
-        List<Notes> costsList = getCategoryAndSumCosts();
+        List<Notes> costsList = getCategory();
         mCostsDataAdapter = new NotesDataAdapter(this, costsList);
         mMainList.setAdapter(mCostsDataAdapter);
 
@@ -80,7 +80,7 @@ public class DiagramActivity extends AppCompatActivity
     }
 
 
-    protected float[] getSumCosts() {
+    protected float[] getNote() {
         DbHelper dbHelper = new DbHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -104,7 +104,7 @@ public class DiagramActivity extends AppCompatActivity
         return result;
     }
 
-    protected ArrayList<Notes> getCategoryAndSumCosts() {
+    protected ArrayList<Notes> getCategory() {
         DbHelper dbHelper = new DbHelper(this);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ArrayList<Notes> data = new ArrayList<>();
@@ -123,7 +123,7 @@ public class DiagramActivity extends AppCompatActivity
         return data;
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

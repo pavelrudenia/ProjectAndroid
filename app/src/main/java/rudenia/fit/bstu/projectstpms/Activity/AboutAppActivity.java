@@ -33,6 +33,8 @@ public class AboutAppActivity extends AppCompatActivity implements NavigationVie
 
         NavigationView navigationView = findViewById(R.id.nav_view_main);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

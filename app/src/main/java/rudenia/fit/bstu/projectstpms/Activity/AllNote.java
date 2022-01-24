@@ -226,6 +226,7 @@ public class AllNote extends AppCompatActivity
         }
 
     protected ArrayList<String> getCosts() {
+
         DbHelper dbHelper = new DbHelper(this);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ArrayList<String> data = new ArrayList<>();
@@ -247,7 +248,7 @@ public class AllNote extends AppCompatActivity
         return data;
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

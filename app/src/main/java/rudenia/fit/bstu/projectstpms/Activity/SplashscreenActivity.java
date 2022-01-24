@@ -21,7 +21,6 @@ public class SplashscreenActivity extends Activity {
 
     private Handler mHandler = new Handler() {
 
-        @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
 

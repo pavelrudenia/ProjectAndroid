@@ -38,6 +38,7 @@ public class CreateCategoryDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         EditText mCategoryName = getDialog().findViewById(R.id.category_name);
                         String categoryName = mCategoryName.getText().toString();
+                        categoryName = categoryName.trim();
                         if (!categoryName.isEmpty()) {
                             DbHelper dbHelper = new DbHelper(getContext());
                             SQLiteDatabase database = dbHelper.getWritableDatabase();

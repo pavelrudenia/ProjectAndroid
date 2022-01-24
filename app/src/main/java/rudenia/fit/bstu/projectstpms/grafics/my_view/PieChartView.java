@@ -32,7 +32,7 @@ public class PieChartView extends View {
     }
 
 
-    @SuppressLint("DrawAllocation")
+
     @Override
     protected void onDraw(Canvas canvas) {
         if (this.dataPoints != null) {

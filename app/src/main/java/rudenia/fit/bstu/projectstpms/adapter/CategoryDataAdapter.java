@@ -41,7 +41,6 @@ public class CategoryDataAdapter extends RecyclerView.Adapter<CategoryDataAdapte
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final CategoryDataAdapter.ViewHolder holder, int position) {
         Category category = categories.get(position);
