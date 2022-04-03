@@ -49,7 +49,7 @@ public class SplashscreenActivity extends Activity {
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashscreenActivity.this, MainActivity.class));
+                startActivity(new Intent(SplashscreenActivity.this, StartActivity.class));
                 finish();
             }
         }, 3*1111);

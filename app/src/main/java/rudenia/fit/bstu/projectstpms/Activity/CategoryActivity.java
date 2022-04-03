@@ -32,6 +32,7 @@ public class CategoryActivity extends AppCompatActivity
     private RecyclerView mCategoryList;
     private CategoryDataAdapter mCategoryDataAdapter;
     protected List<Category> categoryList;
+    String Author;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,12 @@ public class CategoryActivity extends AppCompatActivity
         setContentView(R.layout.activity_category);
 
         this.setTitle("Категории");
+
+        Bundle arguments = getIntent().getExtras();
+
+        if(arguments!=null) {
+            Author = arguments.get("name").toString();
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar_category);
         setSupportActionBar(toolbar);
@@ -126,22 +133,30 @@ public class CategoryActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_monthly_report_category:
-                startActivity(new Intent(CategoryActivity.this, MainActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent1 = new Intent(this,MainActivity.class);
+                intent1.putExtra("name", Author);
+                startActivity(intent1);
                 break;
             case R.id.nav_category_category:
                 break;
             case R.id.nav_costs_category:
-                startActivity(new Intent(CategoryActivity.this, AllNote.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent2 = new Intent(this,AllNote.class);
+                intent2.putExtra("name", Author);
+                startActivity(intent2);
                 break;
             case R.id.nav_diagram_main:
-                startActivity(new Intent(CategoryActivity.this, DiagramActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent3 = new Intent(this,DiagramActivity.class);
+                intent3.putExtra("name", Author);
+                startActivity(intent3);
                 break;
             case R.id.nav_about_category:
-                startActivity(new Intent(CategoryActivity.this, AboutAppActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent4 = new Intent(this,AboutAppActivity.class);
+                intent4.putExtra("name", Author);
+                startActivity(intent4);
+                break;
+            case R.id.nav_logout:
+                Intent intent5 = new Intent(this,StartActivity.class);
+                startActivity(intent5);
                 break;
         }
         DrawerLayout drawer = findViewById(R.id.category_drawer_layout);

@@ -37,6 +37,7 @@ public class DiagramActivity extends AppCompatActivity
     private PieChartView mPieChartView;
     private RecyclerView mMainList;
     private NotesDataAdapter mCostsDataAdapter;
+    String Author;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -45,6 +46,12 @@ public class DiagramActivity extends AppCompatActivity
         setContentView(R.layout.activity_diagram);
 
         this.setTitle("Диаграмма");
+
+        Bundle arguments = getIntent().getExtras();
+
+        if(arguments!=null) {
+            Author = arguments.get("name").toString();
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -86,7 +93,7 @@ public class DiagramActivity extends AppCompatActivity
 
         List<Float> listResult = new ArrayList<>();
 
-        String query = "select CATEGORY, count(Note) count from Note group by CATEGORY order by CATEGORY asc;";
+        String query = "select CATEGORY, count(Note) count from Note where Name='"+Author+"' group by CATEGORY order by CATEGORY asc;";
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
@@ -110,7 +117,7 @@ public class DiagramActivity extends AppCompatActivity
         ArrayList<Notes> data = new ArrayList<>();
 
         String query = "select CATEGORY, count(co.Note) count from Note co, Category ca "
-                + "where co.CATEGORY = ca.NAME group by CATEGORY order by count desc;";
+                + "where  co.CATEGORY = ca.NAME and  co.Name='"+Author+"' group by CATEGORY order by count desc;";
         Cursor cursor = database.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             int categoryIndex = cursor.getColumnIndex("CATEGORY");
@@ -128,23 +135,31 @@ public class DiagramActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_monthly_report_main:
-                startActivity(new Intent(this, MainActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent2 = new Intent(this,MainActivity.class);
+                intent2.putExtra("name", Author);
+                startActivity(intent2);
                 break;
             case R.id.nav_category_main:
-                startActivity(new Intent(this, CategoryActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent = new Intent(this,CategoryActivity.class);
+                intent.putExtra("name", Author);
+                startActivity(intent);
                 break;
             case R.id.nav_costs_main:
-                startActivity(new Intent(this, AllNote.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent1 = new Intent(this,AllNote.class);
+                intent1.putExtra("name", Author);
+                startActivity(intent1);
                 break;
             case R.id.nav_diagram_main:
                 onBackPressed();
                 break;
             case R.id.nav_about_main:
-                startActivity(new Intent(this, AboutAppActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent3 = new Intent(this,AboutAppActivity.class);
+                intent3.putExtra("name", Author);
+                startActivity(intent3);
+                break;
+            case R.id.nav_logout:
+                Intent intent4 = new Intent(this,StartActivity.class);
+                startActivity(intent4);
                 break;
         }
         DrawerLayout drawer = findViewById(R.id.main_drawer_layout);

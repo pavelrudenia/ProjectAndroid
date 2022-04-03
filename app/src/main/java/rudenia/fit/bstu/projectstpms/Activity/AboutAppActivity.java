@@ -15,12 +15,18 @@ import rudenia.fit.bstu.projectstpms.R;
 
 
 public class AboutAppActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-
+    String Author;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_app);
         this.setTitle("О приложении");
+
+        Bundle arguments = getIntent().getExtras();
+
+        if(arguments!=null) {
+            Author = arguments.get("name").toString();
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -42,23 +48,31 @@ public class AboutAppActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_monthly_report_main:
-                startActivity(new Intent(this, MainActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent2 = new Intent(this,MainActivity.class);
+                intent2.putExtra("name", Author);
+                startActivity(intent2);
                 break;
             case R.id.nav_category_main:
-                startActivity(new Intent(this, CategoryActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent = new Intent(this,CategoryActivity.class);
+                intent.putExtra("name", Author);
+                startActivity(intent);
                 break;
             case R.id.nav_costs_main:
-                startActivity(new Intent(this, AllNote.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent1 = new Intent(this,AllNote.class);
+                intent1.putExtra("name", Author);
+                startActivity(intent1);
                 break;
             case R.id.nav_diagram_main:
-                startActivity(new Intent(this, DiagramActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent3= new Intent(this,DiagramActivity.class);
+                intent3.putExtra("name", Author);
+                startActivity(intent3);
                 break;
             case R.id.nav_about_main:
                 onBackPressed();
+                break;
+            case R.id.nav_logout:
+                Intent intent4 = new Intent(this,StartActivity.class);
+                startActivity(intent4);
                 break;
         }
         DrawerLayout drawer = findViewById(R.id.main_drawer_layout);

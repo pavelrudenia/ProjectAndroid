@@ -28,10 +28,18 @@ public class DbHelper extends SQLiteOpenHelper {
                 + "DATE text not null, "
                 + "Time text not null, "
                 + "CATEGORY text not null, "
+                + "Name text  not null, "
+                + "constraint FK_Author foreign key(Name) references Users(name) on delete cascade on update cascade,"
                 + "constraint FK_CATEGORY foreign key(CATEGORY) references Category(NAME) on delete cascade on update cascade);");
 
         database.execSQL("create index if not exists idx_сosts "
                 + "on Note(CATEGORY);");
+
+        database.execSQL("create table if not exists Users ( "
+                + "name text primary key unique not null, "
+                + "email text not null, "
+                + "phone text not null, "
+                + "password text not null);");
     }
 
     @Override

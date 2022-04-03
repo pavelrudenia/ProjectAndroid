@@ -29,6 +29,9 @@ android {
 }
 
 dependencies {
+   // implementation 'com.android.support:cardview-v7'
+    //implementation 'commons-validator:commons-validator:1.4.1'
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
 
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'

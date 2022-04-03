@@ -26,6 +26,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.google.android.material.navigation.NavigationView;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -45,6 +47,7 @@ public class AllNote extends AppCompatActivity
     private EditText mDateWith, mDateOn;
     private String dateWith, dateOn;
     private NotificationManager notificationManager;
+    String Author;
     // Идентификатор уведомления
     private static final int NOTIFY_ID = 1;
     // Идентификатор канала
@@ -55,6 +58,13 @@ public class AllNote extends AppCompatActivity
         setContentView(R.layout.activity_all_note);
 
         this.setTitle("Заметки");
+
+        Bundle arguments = getIntent().getExtras();
+
+        if(arguments!=null) {
+            Author = arguments.get("name").toString();
+        }
+        Toast.makeText(this, Author, Toast.LENGTH_SHORT).show();
 
         Toolbar toolbar = findViewById(R.id.toolbar_costs);
         setSupportActionBar(toolbar);
@@ -107,6 +117,7 @@ public class AllNote extends AppCompatActivity
                             .setPositiveButton("Да", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    db = dbHelper.getWritableDatabase();
                                   db.delete("Note", "Note = '"+"[" + getNote +"]"+ "'", null);
                                     Notification();
                                     onStart();
@@ -121,6 +132,7 @@ public class AllNote extends AppCompatActivity
 
     @Override
     protected void onStart() {
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
                 getCosts());
         mNoteList.setAdapter(adapter);
@@ -202,11 +214,11 @@ public class AllNote extends AppCompatActivity
         getPeriod();
         mNoteList.setAdapter(null);
             DbHelper dbHelper = new DbHelper(this);
-            SQLiteDatabase database = dbHelper.getWritableDatabase();
+             db = dbHelper.getWritableDatabase();
             ArrayList<String> data = new ArrayList<>();
 //select * from Note where CATEGORY='test' and DATE BETWEEN '10.12.2021' and '12.12.2021'
-            Cursor cursor = database.rawQuery("select Note, DATE, Time, CATEGORY from Note "
-                    + "where CATEGORY = '" + mNote.getSelectedItem().toString() + "' "
+            Cursor cursor = db.rawQuery("select Note, DATE, Time, CATEGORY from Note where Name='"+Author+"' "
+                    + "and CATEGORY = '" + mNote.getSelectedItem().toString() + "' "
                     + "and DATE BETWEEN '" + dateWith + "' and '" + dateOn + "' "
                     + "order by Time desc", null);
             if (cursor.moveToFirst()) {
@@ -231,7 +243,8 @@ public class AllNote extends AppCompatActivity
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ArrayList<String> data = new ArrayList<>();
 
-        Cursor cursor = database.rawQuery("select * from Note", null);
+
+        Cursor cursor = database.rawQuery("select * from Note where Name='"+Author+"'  ", null);
         if (cursor.moveToFirst()) {
             int indexNote = cursor.getColumnIndex("Note");
             int indexDate = cursor.getColumnIndex("DATE");
@@ -245,6 +258,7 @@ public class AllNote extends AppCompatActivity
             } while (cursor.moveToNext());
         }
         cursor.close();
+        db.close();
         return data;
     }
 
@@ -253,22 +267,30 @@ public class AllNote extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_monthly_report_costs:
-                startActivity(new Intent(AllNote.this, MainActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent = new Intent(this,MainActivity.class);
+                intent.putExtra("name", Author);
+                startActivity(intent);
                 break;
             case R.id.nav_category_costs:
-                startActivity(new Intent(AllNote.this, CategoryActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent1 = new Intent(this,CategoryActivity.class);
+                intent1.putExtra("name", Author);
+                startActivity(intent1);
                 break;
             case R.id.nav_costs_costs:
                 break;
             case R.id.nav_diagram_main:
-                startActivity(new Intent(AllNote.this, DiagramActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent2 = new Intent(this,DiagramActivity.class);
+                intent2.putExtra("name", Author);
+                startActivity(intent2);
                 break;
             case R.id.nav_about_costs:
-                startActivity(new Intent(AllNote.this, AboutAppActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent3 = new Intent(this,AboutAppActivity.class);
+                intent3.putExtra("name", Author);
+                startActivity(intent3);
+                break;
+            case R.id.nav_logout:
+                Intent intent4 = new Intent(this,StartActivity.class);
+                startActivity(intent4);
                 break;
         }
         DrawerLayout drawer = findViewById(R.id.costs_drawer_layout);

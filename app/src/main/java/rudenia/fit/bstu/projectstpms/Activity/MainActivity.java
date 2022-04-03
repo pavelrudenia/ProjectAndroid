@@ -12,15 +12,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,9 +40,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DbHelper dbHelper;
     private SQLiteDatabase db;
     private Spinner mCategory;
-    private TextView EnteredText;
+    private EditText EnteredText;
     private String selectedCategory;
     private ImageView ConvertAnim;
+    String Author;
 
     private static final int Print_Words = 100;
 
@@ -50,6 +52,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         this.setTitle("Главная");
+
+        Bundle arguments = getIntent().getExtras();
+
+        if(arguments!=null) {
+            Author = arguments.get("name").toString();
+        }
+
+
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -90,6 +100,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout, menu);
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_search:
+                // do something
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         //Проверяем успешность получения обратного ответа:
@@ -112,20 +140,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 onBackPressed();
                 break;
             case R.id.nav_category_main:
-                startActivity(new Intent(MainActivity.this, CategoryActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent = new Intent(this,CategoryActivity.class);
+                intent.putExtra("name", Author);
+                startActivity(intent);
                 break;
             case R.id.nav_costs_main:
-                startActivity(new Intent(MainActivity.this, AllNote.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+//                startActivity(new Intent(MainActivity.this, AllNote.class)
+//                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent1 = new Intent(this,AllNote.class);
+                intent1.putExtra("name", Author);
+                startActivity(intent1);
                 break;
             case R.id.nav_diagram_main:
-                startActivity(new Intent(MainActivity.this, DiagramActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent2 = new Intent(this,DiagramActivity.class);
+                intent2.putExtra("name", Author);
+                startActivity(intent2);
                 break;
             case R.id.nav_about_main:
-                startActivity(new Intent(MainActivity.this, AboutAppActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Intent intent3 = new Intent(this,AboutAppActivity.class);
+                intent3.putExtra("name", Author);
+                startActivity(intent3);
+                break;
+            case R.id.nav_logout:
+                Intent intent4 = new Intent(this,StartActivity.class);
+                startActivity(intent4);
                 break;
         }
         DrawerLayout drawer = findViewById(R.id.main_drawer_layout);
@@ -179,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 cv.put("DATE", date);
                 cv.put("Time", time);
                 cv.put("CATEGORY", selectedCategory);
+                cv.put("Name",Author);
 
                 database.insert("Note", null, cv);
                 // super.onBackPressed();
@@ -205,5 +244,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void startAnimation2(){
         Animation animation = AnimationUtils.loadAnimation(this,R.anim.anim2);
         ConvertAnim.startAnimation(animation);
+    }
+    public void Test(View view){
+        Intent intent = new Intent(this,StartActivity.class);
+        startActivity(intent);
     }
 }

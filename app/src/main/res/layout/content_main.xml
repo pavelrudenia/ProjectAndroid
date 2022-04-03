@@ -70,18 +70,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
 
+
+            android:text="Записать"
             android:background="@drawable/roundedbutton"
             android:fontFamily="sans-serif-condensed"
-            android:text="Записать"
             android:textColor="#131212"
             android:textColorHint="#040303"
             android:textSize="16sp" />
 
-        <TextView
+        <EditText
             android:id="@+id/tv"
             android:layout_width="match_parent"
             android:layout_height="114dp"
-            android:text="@string/text"
+            android:hint="@string/text"
 
             android:textSize="16sp" />
 
@@ -120,6 +121,7 @@
             android:layout_width="205dp"
             android:layout_height="199dp"
             app:srcCompat="@drawable/convert" />
+
 
     </LinearLayout>
 

@@ -31,6 +31,10 @@
                 android:id="@+id/nav_about_main"
                 android:icon="@drawable/ic_about"
                 android:title="@string/about_app" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/logout"
+                android:title="Выйти из аккаунта" />
         </menu>
     </item>
 
