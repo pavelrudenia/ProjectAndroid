@@ -21,8 +21,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 
-
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
+
+import javax.crypto.SecretKeyFactory;
 
 import rudenia.fit.bstu.projectstpms.R;
 import rudenia.fit.bstu.projectstpms.database.DbHelper;
@@ -186,6 +188,16 @@ public class StartActivity extends AppCompatActivity {
                 String Password=password.getText().toString().trim();
                 Password = String.valueOf(Password.hashCode());
                 SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+                SecretKeyFactory keyFactory = null;
+                try
+                {
+                    keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+                }
+                catch (NoSuchAlgorithmException e){
+                    Toast.makeText(StartActivity.this, "Ошибка", Toast.LENGTH_SHORT).show();
+                }
+
 
                 String query = "SELECT COUNT(*) as A FROM Users "
                         + "where name = '" + Name + "' ";
