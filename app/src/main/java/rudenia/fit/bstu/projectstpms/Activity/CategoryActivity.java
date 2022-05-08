@@ -109,7 +109,7 @@ public class CategoryActivity extends AppCompatActivity
     protected void deleteCategory(Category category) {
         DbHelper dbHelper = new DbHelper(CategoryActivity.this);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
-        database.delete("Category", "NAME = '" + category.getName() + "'", null);
+        database.delete("Category", "category = '" + category.getName() + "'", null);
     }
 
     protected ArrayList<Category> getCategory() {
@@ -117,9 +117,9 @@ public class CategoryActivity extends AppCompatActivity
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ArrayList<Category> data = new ArrayList<>();
 
-        Cursor cursor = database.rawQuery("select NAME from Category", null);
+        Cursor cursor = database.rawQuery("select category from Category", null);
         if (cursor.moveToFirst()) {
-            int indexName = cursor.getColumnIndex("NAME");
+            int indexName = cursor.getColumnIndex("category");
             do {
                 data.add(new Category(cursor.getString(indexName)));
             } while (cursor.moveToNext());

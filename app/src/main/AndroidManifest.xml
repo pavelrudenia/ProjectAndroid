@@ -2,14 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="rudenia.fit.bstu.projectstpms">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activity.StartActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Activity.AllNoteNoEthernet"></activity>
+        <activity android:name=".Activity.StartActivityNoEthernet" />
+        <activity android:name=".Activity.StartActivity" />
         <activity android:name=".Activity.DiagramActivity" />
         <activity android:name=".Activity.AllNote" />
         <activity
@@ -42,6 +48,8 @@
             android:name=".ContentProvider.NotesProvider"
             android:authorities="by.bstu.providers.NotesList"
             android:exported="true" />
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>
 
 </manifest>

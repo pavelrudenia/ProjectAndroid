@@ -1,11 +1,14 @@
 package rudenia.fit.bstu.projectstpms.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 
 import rudenia.fit.bstu.projectstpms.ProgressBar.RateTextCircularProgressBar;
 import rudenia.fit.bstu.projectstpms.R;
@@ -49,11 +52,30 @@ public class SplashscreenActivity extends Activity {
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashscreenActivity.this, StartActivity.class));
+                AreYouOnline();
                 finish();
             }
         }, 3*1111);
     }
 
-
+    public void AreYouOnline(){
+        if ( !isOnline() ){
+            Intent intent = new Intent(this,StartActivityNoEthernet.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent2 = new Intent(this,StartActivity.class);
+            startActivity(intent2);
+        }
+    }
+    protected boolean isOnline() {
+        String cs = Context.CONNECTIVITY_SERVICE;
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(cs);
+        if (cm.getActiveNetworkInfo() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

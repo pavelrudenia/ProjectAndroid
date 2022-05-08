@@ -19,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,9 +30,25 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+
 import rudenia.fit.bstu.projectstpms.R;
 import rudenia.fit.bstu.projectstpms.database.DbHelper;
 
@@ -118,7 +135,36 @@ public class AllNote extends AppCompatActivity
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     db = dbHelper.getWritableDatabase();
-                                  db.delete("Note", "Note = '"+"[" + getNote +"]"+ "'", null);
+                                  db.delete("posts", "text = '"+"[" + getNote +"]"+ "'", null);
+                                    String url = getNote.substring(0,5);
+
+                                    Thread thread = new Thread(new Runnable() {
+
+                                        @Override
+                                        public void run() {
+                                            try  {
+                                                //"https://notes-webapps.herokuapp.com/post/"+url+"/delete"
+                                                DefaultHttpClient hc = new DefaultHttpClient();
+                                                ResponseHandler res = new BasicResponseHandler();
+                                                String uri = url.replace(" ","%20");
+                                                Log.d("aaa",uri);
+                                                HttpGet http = new HttpGet("https://notes-webapps.herokuapp.com/post/"+uri+"/delete");
+
+                                                //получаем ответ от сервера
+                                                String response = (String) hc.execute(http, res);
+                                            } catch (ClientProtocolException e) {
+                                                e.printStackTrace();
+                                            } catch (IOException exception) {
+                                                exception.printStackTrace();
+                                            }
+
+
+                                        }
+                                    });
+
+                                    thread.start();
+
+
                                     Notification();
                                     onStart();
                                 }
@@ -174,7 +220,7 @@ public class AllNote extends AppCompatActivity
 
     protected ArrayList<String> getFacultys() {
         ArrayList<String> data = new ArrayList<>();
-        String query = "select Category.NAME as category from Category";
+        String query = "select Category.category as category from Category";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             int facultyIndex = cursor.getColumnIndex("category");
@@ -217,15 +263,15 @@ public class AllNote extends AppCompatActivity
              db = dbHelper.getWritableDatabase();
             ArrayList<String> data = new ArrayList<>();
 //select * from Note where CATEGORY='test' and DATE BETWEEN '10.12.2021' and '12.12.2021'
-            Cursor cursor = db.rawQuery("select Note, DATE, Time, CATEGORY from Note where Name='"+Author+"' "
-                    + "and CATEGORY = '" + mNote.getSelectedItem().toString() + "' "
-                    + "and DATE BETWEEN '" + dateWith + "' and '" + dateOn + "' "
-                    + "order by Time desc", null);
+            Cursor cursor = db.rawQuery("select text, date, time, category from posts where author='"+Author+"' "
+                    + "and category = '" + mNote.getSelectedItem().toString() + "' "
+                    + "and date BETWEEN '" + dateWith + "' and '" + dateOn + "' "
+                    + "order by time desc", null);
             if (cursor.moveToFirst()) {
-                int indexNote = cursor.getColumnIndex("Note");
-                int indexDate = cursor.getColumnIndex("DATE");
-                int indexTime = cursor.getColumnIndex("Time");
-                int indexCategory = cursor.getColumnIndex("CATEGORY");
+                int indexNote = cursor.getColumnIndex("text");
+                int indexDate = cursor.getColumnIndex("date");
+                int indexTime = cursor.getColumnIndex("time");
+                int indexCategory = cursor.getColumnIndex("category");
                 do {
                     data.add("---------------------------" + cursor.getString(indexDate) + " " +
                             cursor.getString(indexTime) + "--------------------------\nКатегория:" +
@@ -244,12 +290,12 @@ public class AllNote extends AppCompatActivity
         ArrayList<String> data = new ArrayList<>();
 
 
-        Cursor cursor = database.rawQuery("select * from Note where Name='"+Author+"'  ", null);
+        Cursor cursor = database.rawQuery("select * from posts where author='"+Author+"'  ", null);
         if (cursor.moveToFirst()) {
-            int indexNote = cursor.getColumnIndex("Note");
-            int indexDate = cursor.getColumnIndex("DATE");
-            int indexTime = cursor.getColumnIndex("Time");
-            int indexCategory = cursor.getColumnIndex("CATEGORY");
+            int indexNote = cursor.getColumnIndex("text");
+            int indexDate = cursor.getColumnIndex("date");
+            int indexTime = cursor.getColumnIndex("time");
+            int indexCategory = cursor.getColumnIndex("category");
             do {
                 data.add("---------------------------" + cursor.getString(indexDate) +" "+
                         cursor.getString(indexTime) + "--------------------------\nКатегория:" +

@@ -46,22 +46,7 @@
             app:met_maxCharacters="40"/>
 
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/PhoneField"
-            android:hint="Телефон"
-            android:inputType="phone"
-            android:text=""
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="20sp"
-            app:met_floatingLabel="highlight"
-            app:met_baseColor="#0056d3"
-            app:met_primaryColor="#962360"
-            app:met_singleLineEllipsis="true"
-            app:met_minCharacters="4"
-            app:met_maxCharacters="15"/>
+
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"

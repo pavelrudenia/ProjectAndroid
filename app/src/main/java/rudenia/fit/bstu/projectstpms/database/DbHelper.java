@@ -20,26 +20,28 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL("create table if not exists Category ( "
-                + "NAME text unique primary key);");
+                + "category text unique primary key);");
 
-        database.execSQL("create table if not exists Note ( "
-                + "ID_NOTE integer primary key autoincrement, "
-                + "Note text unique not null, "
-                + "DATE text not null, "
-                + "Time text not null, "
-                + "CATEGORY text not null, "
-                + "Name text  not null, "
-                + "constraint FK_Author foreign key(Name) references Users(name) on delete cascade on update cascade,"
-                + "constraint FK_CATEGORY foreign key(CATEGORY) references Category(NAME) on delete cascade on update cascade);");
+        database.execSQL("create table if not exists posts ( "
+                + "id integer primary key autoincrement, "
+                + "title text DEFAULT Null, "
+                + "text text unique not null, "
+                + "url text unique not null, "
+                + "date text not null, "
+                + "time text not null, "
+                + "category text not null, "
+                + "author text  not null, "
+                + "constraint FK_Author foreign key(author) references Users(name) on delete cascade on update cascade,"
+                + "constraint FK_CATEGORY foreign key(category) references Category(category) on delete cascade on update cascade);");
 
         database.execSQL("create index if not exists idx_сosts "
-                + "on Note(CATEGORY);");
+                + "on posts(category);");
 
-        database.execSQL("create table if not exists Users ( "
-                + "name text primary key unique not null, "
+        database.execSQL("create table if not exists users ( "
+                + "id integer primary key autoincrement, "
+                + "name text  unique not null, "
                 + "email text not null, "
-                + "phone text not null, "
-                + "password text not null);");
+                + "psw text not null);");
     }
 
     @Override

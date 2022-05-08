@@ -31,7 +31,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/title2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -49,7 +49,7 @@
             android:layout_height="375dp"
             android:layout_marginStart="@dimen/content_about_image_MarginStart"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/title2"
             app:srcCompat="@mipmap/logo" />
 
         <TextView

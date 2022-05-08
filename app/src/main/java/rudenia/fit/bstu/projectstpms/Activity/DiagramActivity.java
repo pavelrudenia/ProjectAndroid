@@ -93,7 +93,7 @@ public class DiagramActivity extends AppCompatActivity
 
         List<Float> listResult = new ArrayList<>();
 
-        String query = "select CATEGORY, count(Note) count from Note where Name='"+Author+"' group by CATEGORY order by CATEGORY asc;";
+        String query = "select category, count(text) count from posts where author='"+Author+"' group by category order by category asc;";
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
@@ -116,11 +116,11 @@ public class DiagramActivity extends AppCompatActivity
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ArrayList<Notes> data = new ArrayList<>();
 
-        String query = "select CATEGORY, count(co.Note) count from Note co, Category ca "
-                + "where  co.CATEGORY = ca.NAME and  co.Name='"+Author+"' group by CATEGORY order by count desc;";
+        String query = "select ca.category, count(co.text) count from posts co, Category ca "
+                + "where  co.category = ca.category and  co.author='"+Author+"' group by ca.category order by count desc;";
         Cursor cursor = database.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            int categoryIndex = cursor.getColumnIndex("CATEGORY");
+            int categoryIndex = cursor.getColumnIndex("category");
             int sumIndex = cursor.getColumnIndex("count");
             do {
                 data.add(new Notes(data.size(), cursor.getString(categoryIndex), cursor.getString(sumIndex)));

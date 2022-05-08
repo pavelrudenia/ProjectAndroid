@@ -1,5 +1,7 @@
 package rudenia.fit.bstu.projectstpms.Activity;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +34,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import rudenia.fit.bstu.projectstpms.R;
 import rudenia.fit.bstu.projectstpms.database.DbHelper;
@@ -177,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     protected ArrayList<String> getFacultys() {
         ArrayList<String> data = new ArrayList<>();
-        String query = "select Category.NAME as category from Category";
+        String query = "select Category.category as category from Category";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             int facultyIndex = cursor.getColumnIndex("category");
@@ -199,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     public void addNote(View view) {
         String note = EnteredText.getText().toString();
+        String url = note.substring(1,6);
         @SuppressLint("SimpleDateFormat")
         String date = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
         @SuppressLint("SimpleDateFormat")
@@ -212,22 +220,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 DbHelper dbHelper = new DbHelper(this);
                 SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-                ContentValues cv = new ContentValues();
-                cv.put("Note", note);
-                cv.put("DATE", date);
-                cv.put("Time", time);
-                cv.put("CATEGORY", selectedCategory);
-                cv.put("Name",Author);
 
-                database.insert("Note", null, cv);
-                // super.onBackPressed();
+               ;
+
+                ContentValues cv = new ContentValues();
+                cv.put("text", note);
+                cv.put("url", url);
+                cv.put("date", date);
+                cv.put("time", time);
+                cv.put("category", selectedCategory);
+                cv.put("author",Author);
+
+                database.insert("posts", null, cv);
                 startAnimation();
-                //Toast.makeText(MainActivity.this,"Заметка добавлена успешно!", Toast.LENGTH_SHORT).show();
+
+                Thread thread = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try  {
+
+                            String text = note.replace("[", "");
+                            text = text.replace("]", "");
+                            text = URLEncoder.encode(text, "UTF-8");
+                            String uri = URLEncoder.encode(url, "UTF-8");
+                            HttpClient httpclient = new DefaultHttpClient();
+                            HttpPost http = new HttpPost("https://notes-webapps.herokuapp.com/add_post?name="+text+"&url="+uri+"&language="+selectedCategory+"&post=%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BA%D0%B0+%D1%87%D0%B5%D1%80%D0%B5%D0%B7+%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D1%83&author="+Author+"");
+
+                            try {
+                                String response = (String) httpclient.execute(http, new BasicResponseHandler());
+                            } catch (IOException exception) {
+                                exception.printStackTrace();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                thread.start();
+
+
+
                 Toast t = Toast.makeText(getApplicationContext(),"Заметка добавлена успешно!",Toast.LENGTH_LONG);
                 t.setGravity(Gravity.BOTTOM,0,0);
                 t.show();
-//                toast.setGravity(Gravity.TOP, 0,0);
-//                toast.show();
+
             } else {
                 Toast.makeText(MainActivity.this, "ошибочка", Toast.LENGTH_SHORT).show();
             }
