@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.StartActivity"
+    android:id="@+id/root_element"
+    android:background="@drawable/bg_screen">
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="407dp"
+        android:layout_height="52dp"
+
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/Voice"
+        android:textAlignment="center"
+        android:textColor="#070707"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="330dp"
+        android:layout_height="375dp"
+        android:layout_marginStart="@dimen/content_about_image_MarginStart"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title2"
+        app:srcCompat="@mipmap/logo" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="282dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="72dp"
+        android:background="@drawable/roundedbutton"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Вход"
+        android:textColor="#131212"
+        android:textColorHint="#040303"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
